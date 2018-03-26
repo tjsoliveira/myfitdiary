@@ -1,39 +1,52 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { DetalheExercicioPage } from './../pages/treino/detalhe-exercicio/detalhe-exercicio';
+import { DetalheTreinoPage } from './../pages/treino/detalhe-treino/detalhe-treino';
+import { environment } from './environment';
+import { AngularFireModule } from 'angularfire2';
+
+import { TreinoPage } from './../pages/treino/treino';
+import { NgModule, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
     ContactPage,
+    DetalheExercicioPage,
+    DetalheTreinoPage,
     HomePage,
+    TreinoPage,
     TabsPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(environment.firebase, 'myfitdiary'),
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
     ContactPage,
+    DetalheExercicioPage,
+    DetalheTreinoPage,
     HomePage,
+    TreinoPage,
     TabsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    {provide: LOCALE_ID, useValue: 'pt-BR'},
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

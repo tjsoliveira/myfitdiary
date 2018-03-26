@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ treino.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-list>
+        <ion-item *ngFor="let exe of exercicios | async" >
+            <h2>{{ exe.name }}</h2>
+            <p>{{ exe.descricao }}</p>
+          <button ion-button clear item-right color="dark" (click)="detalheExercicio(exe)"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
+          <button ion-button clear item-right color="dark" (click)="excluirExercicio(exe)"><ion-icon name="trash"></ion-icon></button>
+        </ion-item>
+      </ion-list>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+      <button ion-button block icon-start color="dark" (click)="novoExercicio()">
+        <ion-icon name="add"></ion-icon>
+        Novo Exercicio
+      </button>
+    </ion-toolbar>
+  </ion-footer>

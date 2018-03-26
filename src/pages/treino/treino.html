@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Treino</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let treino of treinos | async" >
+        <h2>{{ treino.name }}</h2>
+        <p>{{ treino.descricao }}</p>
+      <button ion-button clear item-right color="dark" (click)="detalheTreino(treino)"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
+      <button ion-button clear item-right color="dark" (click)="excluirTreino(treino)"><ion-icon name="trash"></ion-icon></button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block icon-start color="dark" (click)="novoTreino()">
+      <ion-icon name="add"></ion-icon>
+      Novo Treino
+    </button>
+  </ion-toolbar>
+</ion-footer>

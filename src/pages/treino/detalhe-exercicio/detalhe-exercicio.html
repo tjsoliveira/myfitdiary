@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ exercicio.name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let serie of series | async" >
+        <h2>Série 0{{ serie.ordemExecucao }}</h2>
+        <p>Mínimo de Repetições: {{ serie.minReps }}</p>
+        <p>Máximo de Repetições: {{ serie.maxReps }}</p>
+        <p>Intervalo (em segundos): {{ serie.intervalo }}</p>
+      <button ion-button clear item-right color="dark" (click)="excluirSerie(serie)"><ion-icon name="trash"></ion-icon></button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block icon-start color="dark" (click)="novaSerie()">
+      <ion-icon name="add"></ion-icon>
+      Nova Série
+    </button>
+  </ion-toolbar>
+</ion-footer>
