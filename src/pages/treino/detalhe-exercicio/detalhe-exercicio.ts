@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavParams, AlertController } from 'ionic-angular';
 import { Exercicio } from '../../../models/exercicio.model';
 import { Serie } from '../../../models/serie.model';
 import { Treino } from '../../../models/treino.model';
@@ -20,7 +20,6 @@ export class DetalheExercicioPage {
 
   constructor(
     private alertCtrl: AlertController,
-    private navCtrl: NavController,
     private navParams: NavParams,
     private firestore: AngularFirestore) {
 
