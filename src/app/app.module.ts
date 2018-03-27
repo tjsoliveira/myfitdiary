@@ -16,6 +16,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { NovoProgressoPage } from '../pages/modals/novo-progresso/novo-progresso';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     DetalheExercicioPage,
     DetalheTreinoPage,
     HomePage,
+    NovoProgressoPage,
     TreinoPage,
     TabsPage
   ],
@@ -40,6 +42,7 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     DetalheExercicioPage,
     DetalheTreinoPage,
     HomePage,
+    NovoProgressoPage,
     TreinoPage,
     TabsPage
   ],

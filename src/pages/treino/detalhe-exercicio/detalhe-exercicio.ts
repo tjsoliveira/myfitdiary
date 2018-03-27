@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavParams, AlertController } from 'ionic-angular';
 import { Exercicio } from '../../../models/exercicio.model';
 import { Serie } from '../../../models/serie.model';
-import { Treino } from '../../../models/treino.model';
 
 @IonicPage()
 @Component({
