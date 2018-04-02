@@ -34,15 +34,15 @@
       <ion-toolbar>
         <ion-row text-center>
           <ion-col col-sm-2 col-md-4>
-            <button ion-button icon-only color="dark" small>
+            <button ion-button icon-only color="dark" small (click)="diaAnterior()">
                 <ion-icon name="arrow-back"></ion-icon>
             </button>
           </ion-col>
           <ion-col col-sm-8 col-md-4 padding>
-              <ion-title>{{ hojePtBr }}</ion-title>
+              <ion-title>{{ hoje }}</ion-title>
           </ion-col>
           <ion-col col-sm-2 col-md-4>
-            <button ion-button icon-only color="dark" small>
+            <button ion-button icon-only color="dark" small (click)="diaPosterior()">
                 <ion-icon name="arrow-forward"></ion-icon>
             </button>
           </ion-col>

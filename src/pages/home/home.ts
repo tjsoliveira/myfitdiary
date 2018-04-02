@@ -17,19 +17,19 @@ export class HomePage {
   progressos: Observable<Progresso[]>
   treinos: Observable<Treino[]>;
 
-  hoje: string = new Date().toISOString().substring(0, 10).replace('/\//g', '-');
-  hojePtBr: string;
+  hojeDate: Date = new Date();
+  hoje: string;
+  contDate: number = 0;
   treino: string;
 
   constructor(
     private db: DatabaseProvider,
     private modalCtrl: ModalController) {
-
-      this.hojePtBr = moment().format('L').replace('/\//g', '-');
   }
 
 
   ionViewWillEnter(){
+    this.hoje = this.hojeDate.toISOString().substring(0, 10).replace('/\//g', '-');
     this.treinos = this.db.getTreinosCollection().valueChanges();
     this.progressos = this.db.getProgressosHoje(this.hoje);
   }
@@ -37,6 +37,20 @@ export class HomePage {
   novoProgresso(){
     let modal = this.modalCtrl.create(NovoProgressoPage, {treino: this.treino});
     modal.present();
+  }
+
+  diaAnterior(){
+    this.hojeDate.setDate(this.hojeDate.getDate() - 1);
+    this.atualizaData();
+  }
+
+  diaPosterior(){
+    this.hojeDate.setDate(this.hojeDate.getDate() + 1);
+    this.atualizaData();
+  }
+
+  atualizaData(){
+    this.hoje = this.hojeDate.toISOString().substring(0, 10).replace('/\//g', '-');
   }
 
 }
