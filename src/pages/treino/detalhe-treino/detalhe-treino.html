@@ -8,14 +8,18 @@
 
 
 <ion-content padding>
-    <ion-list>
-        <ion-item *ngFor="let exe of exercicios | async" >
-            <h2>{{ exe.name }}</h2>
-            <p>{{ exe.descricao }}</p>
-          <button ion-button large clear item-right color="dark" (click)="detalheExercicio(exe)"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
-          <button ion-button large clear item-right color="dark" (click)="excluirExercicio(exe)"><ion-icon name="trash"></ion-icon></button>
-        </ion-item>
-      </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let exe of exercicios | async" >
+      <h2>{{ exe.name }}</h2>
+      <p>{{ exe.descricao }}</p>
+      <button ion-button large clear item-right color="dark" (click)="detalheExercicio(exe)"><ion-icon name="create"></ion-icon></button>
+      <button ion-button large clear item-right color="dark" (click)="excluirExercicio(exe)"><ion-icon name="trash"></ion-icon></button>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="(exercicios | async)?.length==0">
+    <p>Não há exercícios cadastrados. Clique <a (click)="novoExercicio()"> aqui</a> para cadastrar um novo</p>
+  </ion-list>
 </ion-content>
 
 <ion-footer>

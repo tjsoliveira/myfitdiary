@@ -1,8 +1,9 @@
-import { Observable } from 'rxjs/Observable';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, AlertController } from 'ionic-angular';
+import { DatabaseProvider } from './../../../providers/databaseprovider/databaseprovider';
 import { Exercicio } from '../../../models/exercicio.model';
+import { IonicPage, NavParams, AlertController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 import { Serie } from '../../../models/serie.model';
 
 @IonicPage()
@@ -20,12 +21,16 @@ export class DetalheExercicioPage {
   constructor(
     private alertCtrl: AlertController,
     private navParams: NavParams,
-    private firestore: AngularFirestore) {
+    private db: DatabaseProvider) {
 
       this.treino = this.navParams.get('treino');
       this.exercicio = this.navParams.get('exercicio');
-      this.seriesCollection = this.firestore.collection('treinos').doc(this.treino).collection('exercicios').doc(this.exercicio.name).collection('series');
-      this.series = this.seriesCollection.valueChanges();
+
+  }
+
+  ionViewDidLoad(){
+    this.seriesCollection = this.db.getSeriesCollection(this.treino, this.exercicio.name);
+    this.series = this.seriesCollection.valueChanges();
   }
 
   novaSerie(){
@@ -53,7 +58,6 @@ export class DetalheExercicioPage {
           placeholder: 'Intervalo',
           type: 'number'
         }
-
       ],
       buttons: [
         {
@@ -62,12 +66,8 @@ export class DetalheExercicioPage {
         {
           text: 'Salvar',
           handler: data => {
-            this.seriesCollection.doc(data['ordemExecucao']).set({
-              ordemExecucao: data['ordemExecucao'],
-              minReps: data['minReps'],
-              maxReps: data['maxReps'],
-              intervalo: data['intervalo']
-            });
+            this.db.novaSerie(this.treino, this.exercicio.name, new Serie(
+              data['ordemExecucao'], data['minReps'], data['maxReps'], data['intervalo']));
           }
         }
       ]
@@ -76,6 +76,6 @@ export class DetalheExercicioPage {
   }
 
   excluirSerie(serie: Serie){
-
+    this.db.deleteSerie(this.treino, this.exercicio.name, serie.ordemExecucao);
   }
 }

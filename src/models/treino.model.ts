@@ -7,7 +7,7 @@ export class Treino {
   descricao: string;
   exercicios: Exercicio[] = [];
 
-  constructor(id: string, name: string, descricao: string){
+  constructor(name: string, descricao: string, id?: string){
     this.id = id;
     this.name = name;
     this.descricao = descricao;

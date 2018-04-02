@@ -6,7 +6,49 @@
 
 </ion-header>
 
-
 <ion-content padding>
+  <ion-list>
 
+    <ion-item>
+      <ion-label>Data</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" pickerFormat="DD MMMM YYYY" [(ngModel)]="dataProgresso"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Exercicio</ion-label>
+        <ion-select [(ngModel)]="exercicio" (ionChange)="changeExercicio()">
+          <ion-option *ngFor="let exercicio of exercicios | async" value="{{exercicio.name}}">{{ exercicio.name }}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="(series | async)?.length==0; else select">
+      <p>Não há séries cadastradas para esse exercício. Favor cadastre uma série antes de prosseguir!</p>
+    </ion-item>
+
+    <ng-template #select>
+      <ion-item>
+        <ion-label>Série</ion-label>
+        <ion-select [(ngModel)]="serieId" [disabled]="!exercicio">
+          <ion-option *ngFor="let serie of series | async" value="{{ serie.ordemExecucao }}">
+            {{ serie.ordemExecucao }} - Reps: {{ serie.minReps }} - {{ serie.maxReps }} | Intervalo: {{ serie.intervalo }}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ng-template>
+
+    <ion-item>
+      <ion-input [(ngModel)]="peso" type="number" placeholder="Peso na Execução (em Kg)" min="0"></ion-input>
+    </ion-item>
+
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button block icon-start color="dark" (click)="novoProgresso()" [disabled]="!serieId || !exercicio || !peso">
+      <ion-icon name="clipboard"></ion-icon> Salvar Progresso
+    </button>
+    <button ion-button block icon-start color="danger" (click)="cancelar()">
+        <ion-icon name="exit"></ion-icon> Cancelar
+    </button>
+  </ion-toolbar>
+</ion-footer>

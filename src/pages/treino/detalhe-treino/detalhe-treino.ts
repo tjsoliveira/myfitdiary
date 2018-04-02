@@ -1,3 +1,4 @@
+import { DatabaseProvider } from './../../../providers/databaseprovider/databaseprovider';
 import { DetalheExercicioPage } from './../detalhe-exercicio/detalhe-exercicio';
 import { Exercicio } from './../../../models/exercicio.model';
 import { Component } from '@angular/core';
@@ -20,12 +21,13 @@ export class DetalheTreinoPage {
 
   constructor(
     private alertCtrl: AlertController,
+    private db: DatabaseProvider,
     private navCtrl: NavController,
-    private navParams: NavParams,
-    private firestore: AngularFirestore) {
+    private navParams: NavParams) {
 
     this.treino = this.navParams.get('treino');
-    this.exerciciosCollection = this.firestore.collection('treinos').doc(this.treino.id).collection('exercicios');
+    this.treino.exercicios = [];
+    this.exerciciosCollection = this.db.getExerciciosCollection(this.treino.id);
     this.exercicios = this.exerciciosCollection.valueChanges();
   }
 
@@ -52,7 +54,7 @@ export class DetalheTreinoPage {
         {
           text: 'Salvar',
           handler: data => {
-            this.exerciciosCollection.doc(data['nome']).set({name: data['nome'], descricao: data['descricao']});
+            this.db.novoExercicio(this.treino.id, new Exercicio(data['nome'], data['descricao']));
             this.treino.exercicios.push(new Exercicio(data['nome'], data['descricao']));
           }
         }
@@ -80,12 +82,11 @@ export class DetalheTreinoPage {
         {
           text: 'Apagar',
           handler: () => {
-            this.exerciciosCollection.doc(exercicio.name).delete();
+            this.db.deleteExercicio(this.treino.id, exercicio.name);
           }
         }
       ]
     });
     confirm.present();
-
   }
 }

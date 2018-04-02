@@ -13,9 +13,13 @@
     <ion-item *ngFor="let treino of treinos | async" >
         <h2>{{ treino.name }}</h2>
         <p>{{ treino.descricao }}</p>
-      <button ion-button large clear item-right color="dark" (click)="detalheTreino(treino)"><ion-icon name="arrow-dropright-circle"></ion-icon></button>
+      <button ion-button large clear item-right color="dark" (click)="detalheTreino(treino)"><ion-icon name="create"></ion-icon></button>
       <button ion-button large clear item-right color="dark" (click)="excluirTreino(treino)"><ion-icon name="trash"></ion-icon></button>
     </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="(treinos | async)?.length==0">
+    <p>Não há treinos cadastrados. Clique <a (click)="novoTreino()"> aqui</a> para cadastrar um novo</p>
   </ion-list>
 
 </ion-content>

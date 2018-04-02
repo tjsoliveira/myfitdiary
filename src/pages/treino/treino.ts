@@ -1,3 +1,4 @@
+import { DatabaseProvider } from './../../providers/databaseprovider/databaseprovider';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
@@ -18,13 +19,16 @@ export class TreinoPage {
   private treinosCollection: AngularFirestoreCollection<Treino>;
 
   constructor(
+    private databaseProvider: DatabaseProvider,
     public navCtrl: NavController,
     public navParams: NavParams,
-    private alertCtrl: AlertController,
-    private firestore: AngularFirestore) {
+    private alertCtrl: AlertController) {
 
-      this.treinosCollection = firestore.collection<Treino>('treinos');
-      this.treinos = this.treinosCollection.valueChanges();
+  }
+
+  ionViewWillEnter(){
+    this.treinosCollection = this.databaseProvider.getTreinosCollection();
+    this.treinos = this.databaseProvider.getTreinosCollection().valueChanges();
   }
 
   novoTreino(){
@@ -49,8 +53,7 @@ export class TreinoPage {
         {
           text: 'Salvar',
           handler: data => {
-            const id = this.firestore.createId()
-            this.treinosCollection.doc(id).set({id: id, name: data['nome'], descricao: data['descricao']});
+            this.databaseProvider.novoTreino(new Treino(data['nome'], data['descricao']));
           }
         }
       ]
@@ -77,7 +80,7 @@ export class TreinoPage {
         {
           text: 'Apagar',
           handler: () => {
-            this.treinosCollection.doc(treino.id).delete();
+            this.databaseProvider.deleteTreino(treino.id);
           }
         }
       ]
